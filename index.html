@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ST 睫毛雨衣 — 翹度鎖定，濾鏡不下線</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+TC:wght@300;400;500;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1410;
+    --cream: #faf7f2;
+    --blush: #e8c4b0;
+    --rose: #c97a5e;
+    --gold: #b89a72;
+    --mist: #f0ebe3;
+    --shadow: rgba(26,20,16,0.08);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9999; opacity: 0.4;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100svh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 60px 80px 80px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .brand-tag {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(52px, 6vw, 88px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--rose);
+  }
+
+  .hero-sub {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(28px, 3.5vw, 52px);
+    letter-spacing: 0.08em;
+    color: var(--gold);
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+
+  .hero-tagline {
+    font-size: 14px;
+    line-height: 1.9;
+    color: #6b5c50;
+    max-width: 360px;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
+
+  .hero-tagline strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .cta-wrap {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s 1s forwards;
+  }
+
+  .btn-primary {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 16px 36px;
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.3s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: var(--rose);
+    transform: translateX(-100%);
+    transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .btn-primary:hover::after { transform: translateX(0); }
+  .btn-primary span { position: relative; z-index: 1; }
+  .btn-primary:hover { transform: translateY(-1px); }
+
+  .price-tag {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--rose);
+    letter-spacing: -0.02em;
+  }
+
+  .price-sub {
+    font-size: 11px;
+    color: #9c8878;
+    margin-top: 2px;
+    letter-spacing: 0.1em;
+  }
+
+  /* HERO RIGHT */
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-shape {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, var(--mist) 0%, var(--blush) 60%, #d4937a 100%);
+  }
+
+  .hero-circle {
+    position: absolute;
+    width: 520px; height: 520px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 40%, rgba(255,255,255,0.5), rgba(201,122,94,0.15));
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid rgba(255,255,255,0.4);
+  }
+
+  .hero-product-mock {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -52%);
+    text-align: center;
+    animation: floatAnim 5s ease-in-out infinite;
+  }
+
+  .product-bottle {
+    width: 110px;
+    height: 280px;
+    background: linear-gradient(175deg, #2a2320 0%, #1a1410 40%, #2c2420 100%);
+    border-radius: 55px 55px 40px 40px;
+    position: relative;
+    margin: 0 auto 20px;
+    box-shadow: 0 30px 80px rgba(26,20,16,0.4), inset 2px 0 8px rgba(255,255,255,0.05);
+  }
+
+  .product-bottle::before {
+    content: '';
+    position: absolute;
+    top: -22px; left: 50%; transform: translateX(-50%);
+    width: 28px; height: 30px;
+    background: linear-gradient(180deg, #c8a882, #a07850);
+    border-radius: 6px 6px 0 0;
+    box-shadow: 0 -4px 12px rgba(184,154,114,0.3);
+  }
+
+  .product-bottle::after {
+    content: '';
+    position: absolute;
+    top: 30px; left: 50%; transform: translateX(-50%);
+    width: 70%; height: 1px;
+    background: rgba(255,255,255,0.08);
+  }
+
+  .bottle-label {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 80px;
+  }
+
+  .bottle-label-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 15px;
+    letter-spacing: 0.3em;
+    color: rgba(255,255,255,0.7);
+    display: block;
+  }
+
+  .bottle-label-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    color: rgba(232,196,176,0.6);
+    display: block;
+    margin-top: 3px;
+    line-height: 1.4;
+  }
+
+  .bottle-shine {
+    position: absolute;
+    top: 20px; left: 16px;
+    width: 14px; height: 80px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.12), transparent);
+    border-radius: 10px;
+  }
+
+  .hero-product-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.4em;
+    color: rgba(26,20,16,0.5);
+  }
+
+  .hero-volume {
+    font-size: 11px;
+    color: rgba(26,20,16,0.4);
+    margin-top: 4px;
+    letter-spacing: 0.2em;
+  }
+
+  .corner-text {
+    position: absolute;
+    bottom: 40px; right: 40px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: rgba(26,20,16,0.35);
+    writing-mode: vertical-rl;
+    line-height: 1.6;
+  }
+
+  /* ── STRIPS ── */
+  .strip {
+    background: var(--ink);
+    padding: 18px 80px;
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .strip-inner {
+    display: flex;
+    gap: 60px;
+    animation: scrollStrip 18s linear infinite;
+  }
+
+  .strip-item {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.35em;
+    color: var(--blush);
+    flex-shrink: 0;
+  }
+
+  .strip-dot {
+    color: var(--rose);
+    flex-shrink: 0;
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  /* ── FEATURES ── */
+  .features {
+    padding: 120px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .features-left h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(36px, 4vw, 58px);
+    line-height: 1.2;
+    margin-bottom: 24px;
+    letter-spacing: -0.01em;
+  }
+
+  .features-left h2 em {
+    font-style: italic;
+    color: var(--rose);
+  }
+
+  .features-left p {
+    font-size: 14px;
+    line-height: 2;
+    color: #7a6b60;
+    max-width: 400px;
+    margin-bottom: 48px;
+  }
+
+  .feat-list { list-style: none; display: flex; flex-direction: column; gap: 18px; }
+
+  .feat-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px 24px;
+    background: white;
+    border-left: 2px solid var(--blush);
+    box-shadow: 0 4px 24px var(--shadow);
+    transition: border-color 0.3s, transform 0.25s;
+  }
+
+  .feat-item:hover {
+    border-color: var(--rose);
+    transform: translateX(4px);
+  }
+
+  .feat-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .feat-text strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+  }
+
+  .feat-text span {
+    font-size: 12px;
+    color: #9c8878;
+    line-height: 1.7;
+  }
+
+  /* FEATURES RIGHT — ingredient cards */
+  .ingredients-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .ing-card {
+    background: white;
+    padding: 28px 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 24px var(--shadow);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .ing-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 48px rgba(26,20,16,0.12);
+  }
+
+  .ing-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 3px;
+    background: linear-gradient(90deg, var(--blush), var(--rose));
+  }
+
+  .ing-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px;
+    font-weight: 300;
+    color: var(--mist);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .ing-name {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: var(--ink);
+    letter-spacing: 0.05em;
+  }
+
+  .ing-desc {
+    font-size: 11px;
+    color: #9c8878;
+    line-height: 1.8;
+  }
+
+  /* ── TRIPLE EFFECT ── */
+  .triple {
+    background: var(--ink);
+    padding: 100px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .triple::before {
+    content: '3';
+    position: absolute;
+    right: -20px; top: -60px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 400px;
+    color: rgba(255,255,255,0.02);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .triple-header {
+    text-align: center;
+    margin-bottom: 72px;
+  }
+
+  .triple-header .eyebrow {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.5em;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  .triple-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(32px, 4vw, 56px);
+    color: var(--cream);
+    line-height: 1.2;
+  }
+
+  .triple-header h2 em { font-style: italic; color: var(--blush); }
+
+  .triple-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .triple-card {
+    padding: 52px 40px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+    overflow: hidden;
+    transition: background 0.4s;
+  }
+
+  .triple-card:hover { background: rgba(255,255,255,0.06); }
+
+  .triple-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 2px;
+    background: linear-gradient(90deg, var(--rose), var(--blush));
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .triple-card:hover::after { width: 100%; }
+
+  .tc-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 64px;
+    color: rgba(255,255,255,0.06);
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+
+  .tc-icon { font-size: 28px; margin-bottom: 16px; display: block; }
+
+  .tc-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 12px;
+  }
+
+  .tc-desc {
+    font-size: 13px;
+    color: rgba(250,247,242,0.5);
+    line-height: 1.9;
+  }
+
+  /* ── HOW TO USE ── */
+  .howto {
+    padding: 120px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: start;
+  }
+
+  .howto-left h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(32px, 3.5vw, 52px);
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .howto-left h2 em { font-style: italic; color: var(--rose); }
+
+  .howto-note {
+    font-size: 12px;
+    color: #9c8878;
+    margin-bottom: 48px;
+    letter-spacing: 0.05em;
+    padding: 12px 0 12px 16px;
+    border-left: 2px solid var(--blush);
+  }
+
+  .steps { display: flex; flex-direction: column; gap: 0; }
+
+  .step {
+    display: flex;
+    gap: 28px;
+    padding: 28px 0;
+    border-bottom: 1px solid rgba(26,20,16,0.08);
+    align-items: flex-start;
+    transition: padding-left 0.3s;
+  }
+
+  .step:hover { padding-left: 8px; }
+
+  .step-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--blush);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 36px;
+    text-align: right;
+  }
+
+  .step-body strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    letter-spacing: 0.03em;
+  }
+
+  .step-body p {
+    font-size: 13px;
+    color: #7a6b60;
+    line-height: 1.8;
+  }
+
+  /* STORAGE CARD */
+  .storage-card {
+    background: var(--mist);
+    padding: 48px 40px;
+    position: relative;
+  }
+
+  .storage-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 4px;
+    background: linear-gradient(90deg, var(--rose), var(--gold));
+  }
+
+  .storage-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 400;
+    margin-bottom: 28px;
+  }
+
+  .storage-rows { display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px; }
+
+  .storage-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 13px;
+  }
+
+  .storage-row .si { font-size: 20px; }
+  .storage-row span { color: #6b5c50; line-height: 1.7; }
+  .storage-row span strong { color: var(--ink); font-weight: 500; }
+
+  .shelf-life {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .sl-item {
+    background: white;
+    padding: 16px 18px;
+    border-radius: 2px;
+  }
+
+  .sl-label {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .sl-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .sl-sub {
+    font-size: 10px;
+    color: #9c8878;
+    margin-top: 2px;
+  }
+
+  /* ── TIPS BAR ── */
+  .tips-bar {
+    background: linear-gradient(135deg, var(--rose) 0%, #b86b50 100%);
+    padding: 60px 80px;
+    display: flex;
+    align-items: center;
+    gap: 60px;
+  }
+
+  .tips-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 32px;
+    color: rgba(255,255,255,0.9);
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  .tips-items {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .tip-chip {
+    background: rgba(255,255,255,0.15);
+    color: white;
+    padding: 10px 20px;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    border: 1px solid rgba(255,255,255,0.2);
+    backdrop-filter: blur(8px);
+  }
+
+  /* ── FOOTER CTA ── */
+  .footer-cta {
+    padding: 140px 80px 100px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .footer-cta::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,196,176,0.2), transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .footer-cta .eyebrow {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.5em;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+
+  .footer-cta h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(36px, 5vw, 72px);
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+
+  .footer-cta h2 em { font-style: italic; color: var(--rose); }
+
+  .footer-cta p {
+    font-size: 14px;
+    color: #9c8878;
+    margin-bottom: 52px;
+    letter-spacing: 0.05em;
+  }
+
+  .footer-cta .btn-primary {
+    font-size: 13px;
+    padding: 18px 52px;
+    letter-spacing: 0.2em;
+  }
+
+  .footer-bottom {
+    background: var(--ink);
+    padding: 32px 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.3em;
+    color: var(--blush);
+  }
+
+  .footer-tags {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .footer-tag {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.25);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scrollStrip {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  @keyframes floatAnim {
+    0%, 100% { transform: translate(-50%, -52%); }
+    50% { transform: translate(-50%, -56%); }
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 80px 32px 60px; }
+    .hero-right { height: 380px; }
+    .features { grid-template-columns: 1fr; padding: 80px 32px; gap: 60px; }
+    .triple { padding: 80px 32px; }
+    .triple-cards { grid-template-columns: 1fr; }
+    .howto { grid-template-columns: 1fr; padding: 80px 32px; gap: 60px; }
+    .tips-bar { flex-direction: column; padding: 48px 32px; gap: 28px; }
+    .footer-cta { padding: 80px 32px 80px; }
+    .footer-bottom { flex-direction: column; gap: 20px; padding: 32px; }
+    .strip { padding: 18px 32px; }
+    .ingredients-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="brand-tag">STAYHERE BEAUTY — NEW LAUNCH</div>
+    <h1 class="hero-title">睫毛<em>雨衣</em></h1>
+    <div class="hero-sub">LASH COAT</div>
+    <p class="hero-tagline">
+      濾鏡不是 App，是一支雨衣。<br>
+      <strong>不怕汗。不怕雨。不怕油脂。</strong><br>
+      從早到晚，翹度不打折。
+    </p>
+    <div class="cta-wrap">
+      <a href="#" class="btn-primary"><span>立即預購</span></a>
+      <div>
+        <div class="price-tag">NTD $660</div>
+        <div class="price-sub">10ml 大容量 ／ 11月中旬到貨</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-bg-shape"></div>
+    <div class="hero-circle"></div>
+    <div class="hero-product-mock">
+      <div class="product-bottle">
+        <div class="bottle-shine"></div>
+        <div class="bottle-label">
+          <span class="bottle-label-brand">ST</span>
+          <span class="bottle-label-name">LASH<br>COAT</span>
+        </div>
+      </div>
+      <div class="hero-product-name">ST LASH COAT</div>
+      <div class="hero-volume">10 ml</div>
+    </div>
+    <div class="corner-text">翹度鎖定 · 濾鏡不下線</div>
+  </div>
+</section>
+
+<!-- ══ STRIP ══ -->
+<div class="strip">
+  <div class="strip-inner">
+    <span class="strip-item">防水防汗</span><span class="strip-dot">·</span>
+    <span class="strip-item">防油抗污</span><span class="strip-dot">·</span>
+    <span class="strip-item">持妝定型</span><span class="strip-dot">·</span>
+    <span class="strip-item">修護保養</span><span class="strip-dot">·</span>
+    <span class="strip-item">敏感可用</span><span class="strip-dot">·</span>
+    <span class="strip-item">無油配方</span><span class="strip-dot">·</span>
+    <span class="strip-item">嫁接真睫均適用</span><span class="strip-dot">·</span>
+    <span class="strip-item">防水防汗</span><span class="strip-dot">·</span>
+    <span class="strip-item">防油抗污</span><span class="strip-dot">·</span>
+    <span class="strip-item">持妝定型</span><span class="strip-dot">·</span>
+    <span class="strip-item">修護保養</span><span class="strip-dot">·</span>
+    <span class="strip-item">敏感可用</span><span class="strip-dot">·</span>
+    <span class="strip-item">無油配方</span><span class="strip-dot">·</span>
+    <span class="strip-item">嫁接真睫均適用</span><span class="strip-dot">·</span>
+  </div>
+</div>
+
+<!-- ══ FEATURES ══ -->
+<section class="features">
+  <div class="features-left reveal">
+    <h2>妳值得一個<br><em>不靠運氣</em>的妝感</h2>
+    <p>四大功效，一刷搞定。不論運動、泡湯、突如其來的梅雨，睫毛依然在線。</p>
+    <ul class="feat-list">
+      <li class="feat-item">
+        <span class="feat-icon">💧</span>
+        <div class="feat-text">
+          <strong>防水防汗｜不暈不塌</strong>
+          <span>雨天、流汗、感動落淚，眼妝絲毫不移位</span>
+        </div>
+      </li>
+      <li class="feat-item">
+        <span class="feat-icon">✨</span>
+        <div class="feat-text">
+          <strong>防油抗污｜眼神乾淨俐落</strong>
+          <span>無油配方，有效阻隔外來油脂侵擾</span>
+        </div>
+      </li>
+      <li class="feat-item">
+        <span class="feat-icon">🕐</span>
+        <div class="feat-text">
+          <strong>持妝定型｜從早到晚都在線</strong>
+          <span>長效成膜技術，翹度鎖定整日不鬆散</span>
+        </div>
+      </li>
+      <li class="feat-item">
+        <span class="feat-icon">💎</span>
+        <div class="feat-text">
+          <strong>嫁接、真睫都能用｜修護＋造型</strong>
+          <span>一支搞定延長與保養，敏感肌也安心</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="ingredients-grid reveal">
+    <div class="ing-card">
+      <div class="ing-num">HA</div>
+      <div class="ing-name">玻尿酸</div>
+      <div class="ing-desc">深層補水，維持睫毛水潤光澤感，彈性更在線</div>
+    </div>
+    <div class="ing-card">
+      <div class="ing-num">B5</div>
+      <div class="ing-name">泛醇</div>
+      <div class="ing-desc">強化韌性，讓睫毛柔順不毛躁、更好梳理</div>
+    </div>
+    <div class="ing-card">
+      <div class="ing-num">B3</div>
+      <div class="ing-name">菸鹼醯胺</div>
+      <div class="ing-desc">強化根部，越刷越強壯，睫毛健康升級</div>
+    </div>
+    <div class="ing-card">
+      <div class="ing-num">🌿</div>
+      <div class="ing-name">植萃雙精華</div>
+      <div class="ing-desc">洋甘菊 ＋ 積雪草萃取，舒緩敏感眼周，溫和呵護</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TRIPLE EFFECT ══ -->
+<section class="triple">
+  <div class="triple-header reveal">
+    <div class="eyebrow">TRIPLE EFFECT FORMULA</div>
+    <h2>保護 × 定型 × 修護<br><em>三效一次到位</em></h2>
+  </div>
+  <div class="triple-cards reveal">
+    <div class="triple-card">
+      <div class="tc-num">01</div>
+      <span class="tc-icon">🛡️</span>
+      <div class="tc-title">保護屏障</div>
+      <div class="tc-desc">防水抗汗成膜，形成隱形保護層，阻隔水分、油脂、汗水侵擾，嫁接睫毛續航更久</div>
+    </div>
+    <div class="triple-card">
+      <div class="tc-num">02</div>
+      <span class="tc-icon">📐</span>
+      <div class="tc-title">持久定型</div>
+      <div class="tc-desc">長效定型配方，讓翹度從早鎖定到晚，運動、泡湯、淚崩全都不是問題</div>
+    </div>
+    <div class="triple-card">
+      <div class="tc-num">03</div>
+      <span class="tc-icon">🌱</span>
+      <div class="tc-title">深層修護</div>
+      <div class="tc-desc">五大保養成分同步滲透，每天使用越用越健康，讓睫毛越來越強韌有光澤</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ HOW TO USE ══ -->
+<section class="howto">
+  <div class="howto-left reveal">
+    <h2><em>使用</em>教學</h2>
+    <p class="howto-note">建議睡前或早上出門前使用 ／ 無需卸妝，接觸溫水即可代謝</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>清潔後使用</strong>
+          <p>眼周徹底卸妝，睫毛吹乾，避免油脂影響附著效果</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>均勻薄刷</strong>
+          <p>刷頭輕輕帶過根部至尾端，薄薄一層就足夠有效</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>等候 1–2 分鐘</strong>
+          <p>讓成分完整成膜，保護力 MAX，翹度 LOCK</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <strong>每日保養</strong>
+          <p>天天使用效果更顯著，維持嫁接睫毛最佳續航力</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="storage-card reveal">
+    <h3>保存 SOP</h3>
+    <div class="storage-rows">
+      <div class="storage-row">
+        <span class="si">🌬️</span>
+        <span><strong>Keep it chill</strong><br>放在陰涼、乾燥、通風處保存</span>
+      </div>
+      <div class="storage-row">
+        <span class="si">☀️</span>
+        <span><strong>No drama</strong><br>避免陽光直射、遠離熱源</span>
+      </div>
+      <div class="storage-row">
+        <span class="si">🔒</span>
+        <span><strong>使用後務必轉緊瓶蓋</strong><br>防止混濁、受潮、降效</span>
+      </div>
+    </div>
+    <div class="shelf-life">
+      <div class="sl-item">
+        <div class="sl-label">未開封</div>
+        <div class="sl-val">3 年</div>
+        <div class="sl-sub">保存效期</div>
+      </div>
+      <div class="sl-item">
+        <div class="sl-label">開封後</div>
+        <div class="sl-val">3 個月</div>
+        <div class="sl-sub">建議使用完畢</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TIPS BAR ══ -->
+<div class="tips-bar reveal">
+  <div class="tips-title">小提醒</div>
+  <div class="tips-items">
+    <div class="tip-chip">✔ 敏感肌可用</div>
+    <div class="tip-chip">✔ 無油配方</div>
+    <div class="tip-chip">✔ 嫁接睫毛適用</div>
+    <div class="tip-chip">✔ 真睫毛適用</div>
+    <div class="tip-chip">✔ 溫水代謝，無需卸妝</div>
+    <div class="tip-chip">✔ 台南美睫指定推薦</div>
+  </div>
+</div>
+
+<!-- ══ FOOTER CTA ══ -->
+<section class="footer-cta reveal">
+  <div class="eyebrow">PRE-ORDER NOW</div>
+  <h2>今天起，妳的睫毛<br><em>不靠運氣</em></h2>
+  <p>11月中旬到貨 ／ NTD $660 ／ 10ml 大容量</p>
+  <a href="#" class="btn-primary"><span>立即預購 ST 睫毛雨衣</span></a>
+</section>
+
+<footer class="footer-bottom">
+  <div class="footer-logo">ST · STAYHERE BEAUTY</div>
+  <div class="footer-tags">
+    <span class="footer-tag">#ST睫毛雨衣</span>
+    <span class="footer-tag">#StayhereBeauty</span>
+    <span class="footer-tag">#睫毛不暈染</span>
+    <span class="footer-tag">#台南美睫</span>
+    <span class="footer-tag">#雨天也要美</span>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
